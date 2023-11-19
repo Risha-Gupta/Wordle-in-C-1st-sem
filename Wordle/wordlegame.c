@@ -47,6 +47,10 @@ int checkSize6(char* buffer);
 void input6();
 void editSol6();
 void winCheck6();
+void scramble();
+void mixup4();
+int randint(int min_num, int max_num);
+void scramble4();
 //All global variables
 char* word;
 char* guessWord;
@@ -56,6 +60,33 @@ int round = 0;
 //Main function
 int main()
 {
+    printf("Welcome to the Wordle Game\n");
+    printf("Press 1 to begin\n");
+    printf("Press 2 to play a game of scramble!\n");
+    printf("Press 3 to exit\n");
+    int choice;
+    printf("Enter your choice here: ");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+            start();
+            break;
+        case 2:
+            printf("You have chosen to play scramble\n");
+            printf("Press enter to continue\n");
+            int ch;
+            scanf("%d",&ch);
+            cls();
+            scramble();
+            break;
+        case 3:
+            exitGame();
+            break;
+        default:
+            printf("Invalid choice\n");
+            main();
+    }
     start();
 }
 void cls()
@@ -135,6 +166,7 @@ void nextslide(int a)
 }
 void start()
 {
+    //Free memory
     cls();
     printf("Welcome to The Wordle Game\n");
     printf("---Press 1 to continue\n");
@@ -844,4 +876,181 @@ void printSol(int d)
         printf("  ");
         break;
     }
+}
+void scramble()
+{
+    printf("Welcome to the scramble game\n");
+    printf("You have 6 attempts to guess the word\n");
+    printf("Choose your level\n");
+    printf("---Press 1 for 4 letters\n");
+    printf("---Press 2 for 5 letters\n");
+    printf("---Press 3 for 6 letters\n");
+    printf("---Press 4 to go back\n");
+    int choice;
+    printf("Enter your choice here: ");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+            loading();
+            printf("You have chosen 4 letters\n");
+            scramble4();
+            break;
+        case 2:
+            loading();
+            printf("You have chosen 5 letters\n");
+            //scramble5();
+            break;
+        case 3:
+            loading();
+            printf("You have chosen 6 letters\n");
+            //scramble6();
+            break;
+        case 4:
+            main();
+            exit(0);
+            break;
+        default:
+            printf("Invalid choice\n");
+            scramble();
+            break;
+    }
+}
+void scramble4()
+{
+    cls();
+    printf("Welcome to scramble\n");
+    printf("You have 6 attempts to guess the word\n");
+    printf("The word is a 4 letter word\n");
+    printf("Press enter to continue\n");
+    int ch;
+    scanf("%d",&ch);
+    cls();
+    rand4();
+    mixup4();
+}
+void mixup4()
+{
+    char scrambled[4];
+    char temp[4];
+    strcpy(temp,word);
+    for(int i=0;i<strlen(word);i++)
+    {
+        int j = rand() % strlen(temp);
+        *(scrambled+i) = *(temp+j);
+    for(int k=j;k<strlen(temp);k++)
+    {
+        *(temp+k) = *(temp+k+1);
+    }
+    }
+    printf("The word is: %s",scrambled);
+    for(int i=0;i<6;i++)
+    {
+        printf("Enter guess number %d: ",i+1);
+        char guesser[20];
+        scanf("%s",guesser);
+        if(strcmp(guesser,word)==0)
+        {
+            printf("Good Job!\n");
+            break;
+        }
+    }
+    printf("The word was %s\n ",word);
+    printf("All the best!");
+    printf("Press enter to continue");
+    start();
+    int a;
+    scanf("%d",&a);
+}
+void scramble5()
+{
+    cls();
+    printf("Welcome to scramble\n");
+    printf("You have 6 attempts to guess the word\n");
+    printf("The word is a 5 letter word\n");
+    printf("Press enter to continue\n");
+    int ch;
+    scanf("%d",&ch);
+    cls();
+    rand5();
+    mixup5();
+}
+void mixup5()
+{
+    char scrambled[5];
+    char temp[5];
+    strcpy(temp,word);
+    for(int i=0;i<strlen(word);i++)
+    {
+        int j = rand() % strlen(temp);
+        *(scrambled+i) = *(temp+j);
+    for(int k=j;k<strlen(temp);k++)
+    {
+        *(temp+k) = *(temp+k+1);
+    }
+    }
+    printf("The word is: %s",scrambled);
+    for(int i=0;i<6;i++)
+    {
+        printf("Enter guess number %d: ",i+1);
+        char guesser[20];
+        scanf("%s",guesser);
+        if(strcmp(guesser,word)==0)
+        {
+            printf("Good Job!\n");
+            break;
+        }
+    }
+    printf("The word was %s\n ",word);
+    printf("All the best!");
+    printf("Press enter to continue");
+    start();
+    int a;
+    scanf("%d",&a);
+}
+void scramble6()
+{
+    cls();
+    printf("Welcome to scramble\n");
+    printf("You have 6 attempts to guess the word\n");
+    printf("The word is a 6 letter word\n");
+    printf("Press enter to continue\n");
+    int ch;
+    scanf("%d",&ch);
+    cls();
+    rand6();
+    mixup6();
+}
+void mixup6()
+{
+    char scrambled[6];
+    char temp[6];
+    strcpy(temp,word);
+    for(int i=0;i<strlen(word);i++)
+    {
+        int j = rand() % strlen(temp);
+        *(scrambled+i) = *(temp+j);
+    for(int k=j;k<strlen(temp);k++)
+    {
+        *(temp+k) = *(temp+k+1);
+    }
+    }
+    printf("The word is: %s",scrambled);
+    for(int i=0;i<6;i++)
+    {
+        printf("Enter guess number %d: ",i+1);
+        char guesser[20];
+        scanf("%s",guesser);
+        if(strcmp(guesser,word)==0)
+        {
+            printf("Good Job!\n");
+            break;
+        }
+    }
+    printf("The word was %s\n ",word);
+    printf("All the best!");
+    printf("Press enter to continue");
+    start();
+    int a;
+    scanf("%d",&a);
 }
