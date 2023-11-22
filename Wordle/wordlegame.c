@@ -49,8 +49,12 @@ void editSol6();
 void winCheck6();
 void scramble();
 void mixup4();
-int randint(int min_num, int max_num);
+void mixup5();
+void mixup6();
+void scramble5();
+void scramble6();
 void scramble4();
+int randint(int min_num, int max_num);
 //All global variables
 char* word;
 char* guessWord;
@@ -115,6 +119,7 @@ void exitGame()
     int ch;
     scanf("%d",&ch);
     cls();
+    //to exit the game
     exit(0);
 }
 void help()
@@ -166,7 +171,7 @@ void nextslide(int a)
 }
 void start()
 {
-    //Free memory
+    round = 0;
     cls();
     printf("Welcome to The Wordle Game\n");
     printf("---Press 1 to continue\n");
@@ -253,17 +258,30 @@ void begin4()
     scanf("%d",&ch);
     cls();
     rand4();
+    //Generates an empty matrix for 4 letters
     generateGuess4();
+    //INitialize to 0 to specify that no word is there yet
     generateSol4();
     displayWordle4();
     for(int i=0;i<6;i++)
     {
         input4();
+        //This is to display emojis accordingly
         editSol4();
         cls();
         displayWordle4();
         winCheck4();
-        round++;
+        round++;   
+    }
+    if(round ==6)
+    {
+        cls();
+        printf("You Lost!");
+        printf("Thw word was %s\n",word);
+        printf("Press enter to continue\n");
+        int a;
+        scanf("%d",&a);
+        start();
     }
 }
 void rand4()
@@ -273,7 +291,7 @@ void rand4()
     fp=fopen("common4.txt","r");
     word = (char*)malloc(4*sizeof(char));
     int length = findlen4();
-    //To find a random number between 1 and length
+    //To find a random number between 0 and length-1
     srand(time(0));
     int random = rand()%length;
     int count=0;
@@ -350,6 +368,7 @@ void input4()
         goto label;
     }
     guessWord = (char*)malloc(4*sizeof(char));
+    //Substitute of strcpy
     for(int i=0;i<4;i++)
     {
         *(guessWord+i) = buffer[i];
@@ -367,6 +386,7 @@ int checkSize4(char* buffer)
     else
         return(1);
 }
+//this function checks if the word exists in the dictionary
 int checkExist4(char* buffer)
 {
     FILE *fp;
@@ -415,9 +435,11 @@ void editSol4()
 }
 void winCheck4()
 {
-    int flag=0;
+    int flag=0;//lines
     for(int i=0;i<4;i++)
     {
+        //Sol is a pointer to the matrix
+        //This one is from smile
         if(*(sol+round*4+i)!=1)
         {
             flag=1;
@@ -427,17 +449,6 @@ void winCheck4()
     {
         cls();
         printf("You won\n");
-        printf("The word was %s\n",word);
-        printf("Press enter to continue\n");
-        int ch;
-        scanf("%d",&ch);
-        cls();
-        start();
-    }
-    else if(flag==1)
-    {
-        cls();
-        printf("You lost\n");
         printf("The word was %s\n",word);
         printf("Press enter to continue\n");
         int ch;
@@ -470,6 +481,16 @@ void begin5()
         displayWordle5();
         winCheck5();
         round++;
+    }
+    if(round ==6)
+    {
+        cls();
+        printf("You Lost!");
+        printf("Thw word was %s\n",word);
+        printf("Press enter to continue\n");
+        int a;
+        scanf("%d",&a);
+        start();
     }
 }
 void rand5()
@@ -640,17 +661,6 @@ void winCheck5()
         cls();
         start();
     }
-    else if(flag==1)
-    {
-        cls();
-        printf("You lost\n");
-        printf("The word was %s\n",word);
-        printf("Press enter to continue\n");
-        int ch;
-        scanf("%d",&ch);
-        cls();
-        start();
-    }
 }
 //-//-//-//-//-//-//-//-//-//-//-//
 //for 6 letter word
@@ -676,6 +686,16 @@ void begin6()
         displayWordle6();
         winCheck6();
         round++;
+    }
+    if(round ==6)
+    {
+        cls();
+        printf("You Lost!");
+        printf("Thw word was %s\n",word);
+        printf("Press enter to continue\n");
+        int a;
+        scanf("%d",&a);
+        start();
     }
 }
 void rand6()
@@ -846,17 +866,6 @@ void winCheck6()
         cls();
         start();
     }
-    else if(flag==1)
-    {
-        cls();
-        printf("You lost\n");
-        printf("The word was %s\n",word);
-        printf("Press enter to continue\n");
-        int ch;
-        scanf("%d",&ch);
-        cls();
-        start();
-    }
 }
 //NO difficulty specific functions
 void printSol(int d)
@@ -899,12 +908,12 @@ void scramble()
         case 2:
             loading();
             printf("You have chosen 5 letters\n");
-            //scramble5();
+            scramble5();
             break;
         case 3:
             loading();
             printf("You have chosen 6 letters\n");
-            //scramble6();
+            scramble6();
             break;
         case 4:
             main();
